@@ -1,3 +1,60 @@
+Compilation Notes
+=================
+* mvn package would not run by default because multi-context-broker v1.0.0 could not be found in the remote repository
+* downloaded multi-context-broker v1.0.0 release from internet2's github repo here:
+
+```
+https://github.com/Internet2/Shibboleth-Multi-Context-Broker
+```
+* unpacked the multi-context-broker jar and saved off the POM file from it
+* used mvn install-file to put the jar and pom in my local maven repo:
+
+```
+ mvn install:install-file -DgroupId=edu.internet2.middleware.assurance.mcb -DgeneratePom=false -DartifactId=multi-context-broker -Dversion=1.0.0 -Dpackaging=jar -Dfile=multi-context-broker-1.0.0.jar -DpomFile=pom.xml
+```
+* would not compile now because multi-context-broker's 1.0.0 pom file pointed to unavailable SNAPSHOT releases of 3 projects.  I updated these three projects as follows:
+
+```
+<dependency>
+            <groupId>edu.internet2.middleware</groupId>
+            <artifactId>shibboleth-common</artifactId>
+            <version>1.4.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml</artifactId>
+            <version>2.6.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.internet2.middleware</groupId>
+            <artifactId>shibboleth-identityprovider</artifactId>
+            <version>2.4.1-SNAPSHOT</version>
+        </dependency>
+```
+To
+
+```
+<dependency>
+            <groupId>edu.internet2.middleware</groupId>
+            <artifactId>shibboleth-common</artifactId>
+            <version>1.4.4-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml</artifactId>
+            <version>2.6.5-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>edu.internet2.middleware</groupId>
+            <artifactId>shibboleth-identityprovider</artifactId>
+            <version>2.4.4-SNAPSHOT</version>
+        </dependency>
+
+```
 mcb-duo
 =======
 
